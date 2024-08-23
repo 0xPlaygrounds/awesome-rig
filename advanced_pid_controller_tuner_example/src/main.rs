@@ -134,7 +134,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut pid = PIDController::new(1.0, 0.1, 0.05);  // Initial parameters
     all_pid_params.push(PIDParams { kp: pid.kp, ki: pid.ki, kd: pid.kd });
 
-    for iteration in 0..5 {  // Reduced to 5 iterations for brevity
+    for iteration in 0..20 {  // Reduced to 5 iterations for brevity
         let mut system = System::new();
         let mut response = Vec::new();
 
