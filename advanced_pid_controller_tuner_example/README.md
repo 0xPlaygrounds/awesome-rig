@@ -39,7 +39,7 @@ You'll also need an OpenAI API key. If you don't have one, you can sign up at [O
 2. Add the following dependencies to your `Cargo.toml`:
    ```toml
    [dependencies]
-   rig = "0.1.0"
+   rig-core = "0.1.0"
    serde = { version = "1.0", features = ["derive"] }
    serde_json = "1.0"
    tokio = { version = "1.0", features = ["full"] }

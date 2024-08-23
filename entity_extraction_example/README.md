@@ -19,7 +19,7 @@ You'll also need an OpenAI API key. If you don't have one, you can sign up at Op
 - Add the following dependencies to your `Cargo.toml`:
 ```
 [dependencies]
-rig = "0.1.0"
+rig-core = "0.1.0"
 serde = { version = "1.0", features = ["derive"] }
 schemars = "0.8"
 tokio = { version = "1.0", features = ["full"] }
@@ -57,4 +57,4 @@ If you encounter any issues:
 - Check that all dependencies are properly installed.
 - Verify that you're using a compatible Rust version.
 
-For more detailed information, refer to the Rig documentation.
+For more detailed information, refer to the [Rig documentation](https://docs.rs/rig).
