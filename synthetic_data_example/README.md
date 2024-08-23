@@ -63,4 +63,3 @@ If you encounter any issues:
 - Verify that you're using a compatible Rust version.
 
 For more detailed information, refer to the [Rig documentation](https://docs.rs/rig).
-
