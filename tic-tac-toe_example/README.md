@@ -1,12 +1,8 @@
-# Rig-Powered Tic-Tac-Toe Game
+# [Rig](https://github.com/0xPlaygrounds/rig)-Powered Tic-Tac-Toe Game
 
-## README
+This project demonstrates how to use [Rig](https://github.com/0xPlaygrounds/rig), a powerful Rust library for building LLM-powered applications, to create an AI opponent in a classic game of Tic-Tac-Toe. Whether you're new to Rig or looking to explore AI integration in game development, this example provides an excellent starting point.
 
-### Introduction
-
-Welcome to the Rig-Powered Tic-Tac-Toe game! This project demonstrates how to use Rig, a powerful Rust library for building LLM-powered applications, to create an AI opponent in a classic game of Tic-Tac-Toe. Whether you're new to Rig or looking to explore AI integration in game development, this example provides an excellent starting point.
-
-### What is Rig?
+### What is [Rig](https://github.com/0xPlaygrounds/rig)?
 
 Rig is a Rust library that simplifies the process of integrating large language models (LLMs) into your applications. It provides an easy-to-use interface for interacting with AI models, allowing developers to focus on their application logic rather than the intricacies of AI API interactions.
 

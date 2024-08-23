@@ -1,6 +1,6 @@
-# Synthetic Data Generation with Rig
+# Synthetic Data Generation with [Rig](https://github.com/0xPlaygrounds/rig)
 
-This example showcases how to leverage Rig, a powerful Rust library for building LLM-powered applications, to generate realistic synthetic data based on a given schema. Whether you're new to Rig or looking to explore its capabilities, this example provides an excellent starting point for understanding how to work with AI-powered data generation.
+This example showcases how to leverage [Rig](https://github.com/0xPlaygrounds/rig), a powerful Rust library for building LLM-powered applications, to generate realistic synthetic data based on a given schema. Whether you're new to Rig or looking to explore its capabilities, this example provides an excellent starting point for understanding how to work with AI-powered data generation.
 
 ### Prerequisites
 

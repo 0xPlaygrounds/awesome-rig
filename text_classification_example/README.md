@@ -1,6 +1,6 @@
-# Text Classification with Rig
+# Text Classification with [Rig](https://github.com/0xPlaygrounds/rig)
 
-This example showcases how to use Rig, a powerful Rust library for building LLM-powered applications, to classify text into predefined categories. Whether you're new to Rig or looking to explore its capabilities, this example provides an excellent starting point for understanding how to work with custom data structures and AI-powered classification.
+This example showcases how to use [Rig](https://github.com/0xPlaygrounds/rig), a powerful Rust library for building LLM-powered applications, to classify text into predefined categories. Whether you're new to Rig or looking to explore its capabilities, this example provides an excellent starting point for understanding how to work with custom data structures and AI-powered classification.
 
 ### Prerequisites
 

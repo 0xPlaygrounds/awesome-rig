@@ -1,10 +1,6 @@
-# Adaptive PID Controller Tuner with Charts using Rig
+# Adaptive PID Controller Tuner with Charts using [Rig](https://github.com/0xPlaygrounds/rig)
 
-## README
-
-### Introduction
-
-Welcome to the Adaptive PID Controller Tuner with Charts example using Rig! This project demonstrates how to leverage Rig, a powerful Rust library for building LLM-powered applications, to create an AI agent that tunes a PID controller. We've enhanced this example with visual feedback, allowing you to see the impact of AI-suggested tuning in real-time. Whether you're new to control systems or looking to explore AI-enhanced engineering applications, this example provides an excellent starting point.
+This project demonstrates how to leverage [Rig](https://github.com/0xPlaygrounds/rig), a powerful Rust library for building LLM-powered applications, to create an AI agent that tunes a PID controller. We've enhanced this example with visual feedback, allowing you to see the impact of AI-suggested tuning in real-time. Whether you're new to control systems or looking to explore AI-enhanced engineering applications, this example provides an excellent starting point.
 
 ### What is a PID Controller?
 

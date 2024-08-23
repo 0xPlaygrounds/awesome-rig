@@ -1,6 +1,6 @@
-# Entity Extraction with Rig
+# Entity Extraction with [Rig](https://github.com/0xPlaygrounds/rig)
 
-This example demonstrates how to leverage Rig, a Rust library for building LLM-powered applications, to extract named entities from text. Whether you're new to Rig or looking to explore its capabilities, this example provides a great starting point for understanding how to work with custom data structures and AI-powered extraction.
+This example demonstrates how to leverage [Rig](https://github.com/0xPlaygrounds/rig), a Rust library for building LLM-powered applications, to extract named entities from text. Whether you're new to Rig or looking to explore its capabilities, this example provides a great starting point for understanding how to work with custom data structures and AI-powered extraction.
 
 ## Prerequisites
 Before you begin, make sure you have the following installed:
