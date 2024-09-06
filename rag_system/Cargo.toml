@@ -1,0 +1,10 @@
+[package]
+name = "rag_system"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rig-core = "0.0.6"
+tokio = { version = "1.34.0", features = ["full"] }
+anyhow = "1.0.75"
+pdf-extract = "0.7.3"
