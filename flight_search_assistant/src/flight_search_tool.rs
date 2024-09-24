@@ -1,7 +1,5 @@
 use chrono::Utc;
-use rig::completion::Prompt;
 use rig::completion::ToolDefinition;
-use rig::providers::openai;
 use rig::tool::Tool;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
@@ -171,27 +169,34 @@ impl Tool for FlightSearchTool {
         // Extract flight options
         let mut flight_options = Vec::new();
 
+        // Check if 'data' contains 'flights' array
         if let Some(flights) = data
             .get("data")
             .and_then(|d| d.get("flights"))
             .and_then(|f| f.as_array())
         {
+            // Iterate over flight entries, taking the first 5
             for flight in flights.iter().take(5) {
-                // Extract flight details
+                // Extract flight segments
                 if let Some(segments) = flight
                     .get("segments")
                     .and_then(|s| s.as_array())
                     .and_then(|s| s.get(0))
                 {
+                    // Extract legs from the first segment
                     if let Some(legs) = segments.get("legs").and_then(|l| l.as_array()) {
                         let first_leg = legs.get(0).unwrap_or(&empty_leg);
-                        let last_leg = legs.last().unwrap_or(&empty_leg);
+                        let last_leg = legs.last().unwrap_or(&empty_leg); 
+                        
+                        // Extract airline name
                         let airline = first_leg
                             .get("marketingCarrier")
                             .and_then(|mc| mc.get("displayName"))
                             .and_then(|dn| dn.as_str())
                             .unwrap_or("Unknown")
                             .to_string();
+                        
+                        // Extract flight number
                         let flight_number = format!(
                             "{}{}",
                             first_leg
@@ -203,47 +208,54 @@ impl Tool for FlightSearchTool {
                                 .and_then(|n| n.as_str())
                                 .unwrap_or("")
                         );
+                        
+                        // Extract departure and arrival times
                         let departure = first_leg
                             .get("departureDateTime")
                             .and_then(|dt| dt.as_str())
                             .unwrap_or("")
                             .to_string();
+                        
                         let arrival = last_leg
                             .get("arrivalDateTime")
                             .and_then(|dt| dt.as_str())
                             .unwrap_or("")
                             .to_string();
 
-                        // Parse departure and arrival times
+                        // Parse departure time or fallback to current UTC time
                         let departure_time = chrono::DateTime::parse_from_rfc3339(&departure)
                             .map(|dt| dt.with_timezone(&Utc))
                             .unwrap_or_else(|_| chrono::Utc::now());
 
+                        // Parse arrival time or fallback to current UTC time
                         let arrival_time = chrono::DateTime::parse_from_rfc3339(&arrival)
                             .map(|dt| dt.with_timezone(&Utc))
                             .unwrap_or_else(|_| chrono::Utc::now());
 
-                        // Calculate duration
+                        // Calculate flight duration
                         let duration = arrival_time - departure_time;
                         let hours = duration.num_hours();
                         let minutes = duration.num_minutes() % 60;
                         let duration_str = format!("{} hours {} minutes", hours, minutes);
 
+                        // Determine number of stops
                         let stops = if legs.len() > 1 { legs.len() - 1 } else { 0 };
 
-                        // Get price information
+                        // Extract purchase links array for price information
                         let purchase_links = flight
                             .get("purchaseLinks")
                             .and_then(|pl| pl.as_array())
                             .map(|v| v.as_slice())
                             .unwrap_or(&[]);
 
+                        // Find the best price from purchase links
                         let best_price = purchase_links.iter().min_by_key(|p| {
                             p.get("totalPrice")
                                 .and_then(|tp| tp.as_f64())
                                 .unwrap_or(f64::MAX) as u64
                         });
 
+                        // Extract pricing and booking URL if available
                         if let Some(best_price) = best_price {
                             let total_price = best_price
                                 .get("totalPrice")
@@ -260,6 +272,7 @@ impl Tool for FlightSearchTool {
                                 continue;
                             }
 
+                            // Append extracted flight options to flight_options vector
                             flight_options.push(FlightOption {
                                 airline,
                                 flight_number,
@@ -276,17 +289,21 @@ impl Tool for FlightSearchTool {
                 }
             }
         } else {
+            // Return an error if response structure is invalid
             return Err(FlightSearchError::InvalidResponse);
         }
 
         // Format flight_options into a readable string
+        // Check if there are any flight options
         if flight_options.is_empty() {
             return Ok("No flights found for the given criteria.".to_string());
         }
 
+        // Initialize the output string
         let mut output = String::new();
         output.push_str("Here are some flight options:\n\n");
 
+        // Iterate over each flight option and format the details
         for (i, option) in flight_options.iter().enumerate() {
             output.push_str(&format!("{}. **Airline**: {}\n", i + 1, option.airline));
             output.push_str(&format!(
@@ -311,31 +328,7 @@ impl Tool for FlightSearchTool {
             output.push_str(&format!("   - **Booking URL**: {}\n\n", option.booking_url));
         }
 
+        // Return the formatted flight options
         Ok(output)
     }
-}
-
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Initialize the OpenAI client
-    let openai_client = openai::Client::from_env();
-
-    // Build the agent with the FlightSearchTool
-    let agent = openai_client
-        .agent("gpt-4")
-        .preamble("You are a travel assistant that can help users find flights between airports.")
-        .tool(FlightSearchTool)
-        .build();
-
-    // query
-    let response = agent
-        .prompt("Find me flights from San Antonio (SAT) to Atlanta (ATL) on November 15th 2024.")
-        .await?;
-
-    // Deserialize the response to get the formatted string
-    let formatted_response: String = serde_json::from_str(&response)?;
-
-    println!("Agent response:\n{}", formatted_response);
-
-    Ok(())
 }
