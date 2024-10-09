@@ -5,11 +5,12 @@
 Rig is an open-source Rust library designed to simplify the development of applications powered by Large Language Models (LLMs). It provides a unified API for working with different LLM providers, advanced AI workflow support, and flexible abstractions for building complex AI systems.
 
 Key features of Rig include:
-- Unified API across LLM providers (e.g., OpenAI, Cohere)
+- Unified API across multiple LLM providers (e.g., OpenAI, Anthropic, Cohere, Perplexity)
 - Support for completion and embedding workflows
 - High-level abstractions for agents and RAG systems
 - Extensible architecture for custom implementations
 - Seamless integration with Rust's ecosystem
+- Vector store support, including in-memory and LanceDB options
 
 ## 2. Core Concepts
 
@@ -38,6 +39,8 @@ Embedding models are used for generating vector representations of text. They im
 ```rust
 pub trait EmbeddingModel: Clone + Sync + Send {
     const MAX_DOCUMENTS: usize;
+
+    fn ndims(&self) -> usize;
 
     fn embed_documents(
         &self,
@@ -115,13 +118,13 @@ To start a new project with Rig, add it to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-rig-core = "0.1.0"
+rig-core = "0.2.1"
 tokio = { version = "1.34.0", features = ["full"] }
 ```
 
-### 3.2 Creating a Simple Completion Model
+### 3.2 Creating a Simple Agent
 
-Here's how to create and use a simple completion model:
+Here's how to create and use a simple agent:
 
 ```rust
 use rig::{completion::Prompt, providers::openai};
@@ -129,10 +132,13 @@ use rig::{completion::Prompt, providers::openai};
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
     let openai_client = openai::Client::from_env();
-    let gpt4 = openai_client.model("gpt-4").build();
+    let agent = openai_client
+        .agent("gpt-4")
+        .preamble("You are a helpful assistant.")
+        .build();
 
-    let response = gpt4.prompt("Explain quantum computing in one sentence.").await?;
-    println!("GPT-4: {}", response);
+    let response = agent.prompt("Explain quantum computing in one sentence.").await?;
+    println!("Agent: {}", response);
 
     Ok(())
 }
@@ -182,7 +188,8 @@ impl Tool for Adder {
                         "type": "number",
                         "description": "The second number to add"
                     }
-                }
+                },
+                "required": ["x", "y"]
             }),
         }
     }
@@ -215,18 +222,18 @@ Here's an example of setting up a RAG system with Rig:
 use rig::embeddings::EmbeddingsBuilder;
 use rig::vector_store::{in_memory_store::InMemoryVectorStore, VectorStore};
 
-let embedding_model = openai_client.embedding_model("text-embedding-ada-002");
+let embedding_model = openai_client.embedding_model(openai::TEXT_EMBEDDING_ADA_002);
 let mut vector_store = InMemoryVectorStore::default();
 
 let embeddings = EmbeddingsBuilder::new(embedding_model.clone())
     .simple_document("doc1", "Rig is a Rust library for building LLM applications.")
-    .simple_document("doc2", "Rig supports OpenAI and Cohere as LLM providers.")
+    .simple_document("doc2", "Rig supports OpenAI, Anthropic, Cohere, and Perplexity as LLM providers.")
     .build()
     .await?;
 
 vector_store.add_documents(embeddings).await?;
 
-let rag_agent = openai_client.context_rag_agent("gpt-4")
+let rag_agent = openai_client.agent("gpt-4")
     .preamble("You are an assistant that answers questions about Rig.")
     .dynamic_context(1, vector_store.index(embedding_model))
     .build();
@@ -265,55 +272,72 @@ let embeddings = EmbeddingsBuilder::new(embedding_model)
     .await?;
 ```
 
-### 4.3 Custom Vector Stores
+### 4.3 Using Different LLM Providers
 
-Implement the `VectorStore` trait for custom storage solutions:
+Rig supports multiple LLM providers. Here's how to use different providers:
 
 ```rust
-struct MyCustomStore;
+// OpenAI
+let openai_client = openai::Client::from_env();
+let gpt4_agent = openai_client.agent("gpt-4").build();
 
-impl VectorStore for MyCustomStore {
-    type Q = ();
+// Anthropic
+let anthropic_client = anthropic::ClientBuilder::new(&std::env::var("ANTHROPIC_API_KEY")?)
+    .build();
+let claude_agent = anthropic_client.agent(anthropic::CLAUDE_3_5_SONNET).build();
 
-    async fn add_documents(&mut self, documents: Vec<DocumentEmbeddings>) -> Result<(), VectorStoreError> {
-        // Implementation
-    }
+// Cohere
+let cohere_client = cohere::Client::new(&std::env::var("COHERE_API_KEY")?);
+let command_agent = cohere_client.agent("command").build();
 
-    // Implement other required methods...
-}
+// Perplexity
+let perplexity_client = perplexity::Client::new(&std::env::var("PERPLEXITY_API_KEY")?);
+let llama_agent = perplexity_client.agent(perplexity::LLAMA_3_1_70B_INSTRUCT).build();
 ```
 
-### 4.4 Streaming Responses
+### 4.4 Using LanceDB for Vector Storage
 
-For long-running tasks, Rig supports streaming responses:
+Here's an example of using LanceDB with Rig:
 
 ```rust
-let mut stream = model.completion_stream("Generate a long story").await?;
+use rig_lancedb::{LanceDbVectorStore, SearchParams};
 
-while let Some(chunk) = stream.next().await {
-    print!("{}", chunk?);
-}
+let db = lancedb::connect("data/lancedb-store").execute().await?;
+
+let table = db.create_table(
+    "rig_docs",
+    RecordBatchIterator::new(vec![record_batch], Arc::new(rig_lancedb::schema(model.ndims()))),
+).execute().await?;
+
+let search_params = SearchParams::default();
+let vector_store = LanceDbVectorStore::new(table, model, "id", search_params).await?;
+
+// Use vector_store in your RAG system...
 ```
 
 ## 5. Best Practices and Tips
 
-1. **Error Handling**: Use Rig's error types (`CompletionError`, `EmbeddingError`, etc.) for robust error handling.
+1. **Error Handling**: Use Rig's error types for robust error handling.
 2. **Asynchronous Programming**: Leverage Rust's async features with Rig for efficient I/O operations.
 3. **Modular Design**: Break down complex AI workflows into reusable tools and agents.
 4. **Security**: Always use environment variables or secure vaults for API keys.
 5. **Testing**: Write unit tests for custom tools and mock LLM responses for consistent testing.
+6. **Model Selection**: Choose appropriate models based on your task complexity and performance requirements.
+7. **Prompt Engineering**: Craft clear and specific prompts, utilizing the `preamble` method for setting agent behavior.
+8. **Vector Store Usage**: Use vector stores efficiently, generating embeddings once and reusing them when possible.
 
 ## 6. Troubleshooting Common Issues
 
 1. **API Rate Limiting**: Implement retries with exponential backoff for API calls.
-2. **Memory Usage**: For large document sets, consider using a database-backed vector store instead of in-memory solutions.
+2. **Memory Usage**: For large document sets, consider using LanceDB or other database-backed vector stores instead of in-memory solutions.
 3. **Compatibility**: Ensure you're using compatible versions of Rig and its dependencies.
+4. **Embedding Dimensions**: Make sure to use the correct number of dimensions when working with embeddings and vector stores.
 
 ## 7. Community and Support
 
 - GitHub Repository: https://github.com/0xPlaygrounds/rig
 - Documentation: https://docs.rs/rig-core/latest/rig/
-- Discord Community: [Join here]
+- Discord Community: [Join here] (replace with actual Discord link when available)
 
 ## 8. Future Roadmap
 
@@ -321,5 +345,6 @@ while let Some(chunk) = stream.next().await {
 - Enhanced performance optimizations
 - Advanced AI workflow templates
 - Ecosystem growth with additional tools and libraries
+- Improved documentation and examples
 
-This comprehensive guide covers the core concepts, usage patterns, and advanced features of Rig. It provides a solid foundation for training a RAG agent to assist with Rig-related queries and serve as a coding assistant for Rig-based projects.
+This comprehensive guide covers the core concepts, usage patterns, and advanced features of Rig. It provides a solid foundation for developing LLM-powered applications using Rig and serves as a reference for both beginners and experienced users of the library.

@@ -1,4 +1,8 @@
-1. Building a Simple Agent
+# Rig Examples
+
+This document provides a collection of examples demonstrating various features and use cases of the Rig library for building LLM-powered applications in Rust.
+
+## 1. Building a Simple Agent
 
 ```rust
 use rig::{completion::Prompt, providers::openai};
@@ -19,7 +23,7 @@ async fn main() -> Result<(), anyhow::Error> {
 }
 ```
 
-2. Creating a Custom Tool
+## 2. Creating a Custom Tool
 
 ```rust
 use rig::{completion::ToolDefinition, tool::Tool};
@@ -76,7 +80,7 @@ impl Tool for WeatherTool {
 }
 ```
 
-3. Using Different Models (OpenAI and Cohere)
+## 3. Using Different Models (OpenAI and Cohere)
 
 ```rust
 use rig::{completion::Prompt, providers::{openai, cohere}};
@@ -86,8 +90,8 @@ async fn main() -> Result<(), anyhow::Error> {
     let openai_client = openai::Client::from_env();
     let cohere_client = cohere::Client::new(&std::env::var("COHERE_API_KEY")?);
 
-    let gpt4 = openai_client.model("gpt-4").build();
-    let command = cohere_client.model("command").build();
+    let gpt4 = openai_client.agent("gpt-4").build();
+    let command = cohere_client.agent("command").build();
 
     let gpt4_response = gpt4.prompt("Explain quantum computing").await?;
     let command_response = command.prompt("Explain quantum computing").await?;
@@ -99,10 +103,10 @@ async fn main() -> Result<(), anyhow::Error> {
 }
 ```
 
-4. Chaining Agents
+## 4. Chaining Agents
 
 ```rust
-use rig::{completion::{Chat, Message}, providers::openai};
+use rig::{completion::{Chat, Message}, providers::openai, agent::Agent};
 
 struct TranslatorAgent {
     translator: Agent<openai::CompletionModel>,
@@ -123,7 +127,7 @@ impl TranslatorAgent {
 }
 
 impl Chat for TranslatorAgent {
-    async fn chat(&self, prompt: &str, chat_history: Vec<Message>) -> Result<String, PromptError> {
+    async fn chat(&self, prompt: &str, chat_history: Vec<Message>) -> Result<String, rig::completion::PromptError> {
         let translated = self.translator.chat(prompt, vec![]).await?;
         self.responder.chat(&translated, chat_history).await
     }
@@ -141,7 +145,7 @@ async fn main() -> Result<(), anyhow::Error> {
 }
 ```
 
-5. RAG Agent with Dynamic Tools
+## 5. RAG Agent with Dynamic Tools
 
 ```rust
 use rig::{
@@ -154,7 +158,7 @@ use rig::{
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
     let openai_client = openai::Client::from_env();
-    let embedding_model = openai_client.embedding_model("text-embedding-ada-002");
+    let embedding_model = openai_client.embedding_model(openai::TEXT_EMBEDDING_ADA_002);
 
     // Create vector store and add documents
     let mut vector_store = InMemoryVectorStore::default();
@@ -185,7 +189,7 @@ async fn main() -> Result<(), anyhow::Error> {
 }
 ```
 
-6. Using Extractors
+## 6. Using Extractors
 
 ```rust
 use rig::providers::openai;
@@ -214,7 +218,7 @@ async fn main() -> Result<(), anyhow::Error> {
 }
 ```
 
-7. Text Classification System
+## 7. Text Classification System
 
 ```rust
 use rig::providers::openai;
@@ -252,10 +256,10 @@ async fn main() -> Result<(), anyhow::Error> {
 }
 ```
 
-8. Multi-Agent System
+## 8. Multi-Agent System
 
 ```rust
-use rig::{completion::{Chat, Message}, providers::openai};
+use rig::{completion::{Chat, Message}, providers::openai, agent::Agent};
 
 struct DebateAgents {
     agent_a: Agent<openai::CompletionModel>,
@@ -303,7 +307,7 @@ async fn main() -> Result<(), anyhow::Error> {
 }
 ```
 
-9. Vector Search with Cohere
+## 9. Vector Search with Cohere
 
 ```rust
 use rig::{
@@ -316,8 +320,8 @@ use rig::{
 async fn main() -> Result<(), anyhow::Error> {
     let cohere_client = cohere::Client::new(&std::env::var("COHERE_API_KEY")?);
     
-    let document_model = cohere_client.embedding_model("embed-english-v3.0", "search_document");
-    let search_model = cohere_client.embedding_model("embed-english-v3.0", "search_query");
+    let document_model = cohere_client.embedding_model(cohere::EMBED_ENGLISH_V3, "search_document");
+    let search_model = cohere_client.embedding_model(cohere::EMBED_ENGLISH_V3, "search_query");
 
     let mut vector_store = InMemoryVectorStore::default();
 
@@ -331,17 +335,17 @@ async fn main() -> Result<(), anyhow::Error> {
 
     let index = vector_store.index(search_model);
 
-    let results = index.top_n_from_query("What is Rig?", 1).await?;
+    let results = index.top_n::<String>("What is Rig?", 1).await?;
     
-    for (score, doc) in results {
-        println!("Score: {}, Document: {}", score, doc.document);
+    for (score, id, doc) in results {
+        println!("Score: {}, ID: {}, Document: {}", score, id, doc);
     }
 
     Ok(())
 }
 ```
 
-10. Cohere Connectors
+## 10. Cohere Connectors
 
 ```rust
 use rig::{completion::Completion, providers::cohere::Client as CohereClient};
@@ -375,7 +379,7 @@ async fn main() -> Result<(), anyhow::Error> {
 }
 ```
 
-11. Calculator Chatbot
+## 11. Calculator Chatbot
 
 ```rust
 use rig::{
@@ -391,6 +395,7 @@ use serde_json::json;
 struct CalculatorArgs {
     x: f64,
     y: f64,
+    operation: String,
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -447,7 +452,7 @@ impl Tool for Calculator {
             _ => Err(MathError),
         }
     }
-}
+    }
 
 #[tokio::main]
 async fn main() -> Result<(), anyhow::Error> {
@@ -465,3 +470,183 @@ async fn main() -> Result<(), anyhow::Error> {
 }
 ```
 
+## 12. Using Anthropic's Claude Models
+
+Rig also supports Anthropic's Claude models. Here's an example of how to use them:
+
+```rust
+use rig::{
+    completion::Prompt,
+    providers::anthropic::{self, ClientBuilder, CLAUDE_3_5_SONNET},
+};
+
+#[tokio::main]
+async fn main() -> Result<(), anyhow::Error> {
+    let anthropic_client = ClientBuilder::new(&std::env::var("ANTHROPIC_API_KEY")?)
+        .anthropic_version(anthropic::ANTHROPIC_VERSION_LATEST)
+        .build();
+
+    let agent = anthropic_client
+        .agent(CLAUDE_3_5_SONNET)
+        .preamble("Be precise and concise.")
+        .temperature(0.5)
+        .max_tokens(8192)
+        .build();
+
+    let response = agent
+        .prompt("Explain the key features of the Rig library for Rust.")
+        .await?;
+
+    println!("Claude: {}", response);
+
+    Ok(())
+}
+```
+
+## 13. Using Perplexity Models
+
+Rig also supports Perplexity AI models. Here's an example:
+
+```rust
+use rig::{
+    completion::Prompt,
+    providers::perplexity::{self, Client, LLAMA_3_1_70B_INSTRUCT},
+};
+use serde_json::json;
+
+#[tokio::main]
+async fn main() -> Result<(), anyhow::Error> {
+    let perplexity_client = Client::new(&std::env::var("PERPLEXITY_API_KEY")?);
+
+    let agent = perplexity_client
+        .agent(LLAMA_3_1_70B_INSTRUCT)
+        .preamble("Be precise and concise.")
+        .temperature(0.5)
+        .additional_params(json!({
+            "return_related_questions": true,
+            "return_images": true
+        }))
+        .build();
+
+    let response = agent
+        .prompt("What are the main benefits of using Rig for LLM applications?")
+        .await?;
+
+    println!("Perplexity: {}", response);
+
+    Ok(())
+}
+```
+
+## 14. Using LanceDB for Vector Storage
+
+Rig supports LanceDB for efficient vector storage. Here's an example of how to use it:
+
+```rust
+use std::sync::Arc;
+use arrow_array::RecordBatchIterator;
+use rig::{
+    embeddings::{EmbeddingModel, EmbeddingsBuilder},
+    providers::openai::{Client, TEXT_EMBEDDING_ADA_002},
+    vector_store::VectorStoreIndex,
+};
+use rig_lancedb::{LanceDbVectorStore, SearchParams};
+use serde::Deserialize;
+
+#[derive(Deserialize, Debug)]
+struct VectorSearchResult {
+    id: String,
+    content: String,
+}
+
+#[tokio::main]
+async fn main() -> Result<(), anyhow::Error> {
+    let openai_client = Client::from_env();
+    let model = openai_client.embedding_model(TEXT_EMBEDDING_ADA_002);
+
+    // Initialize LanceDB locally
+    let db = lancedb::connect("data/lancedb-store").execute().await?;
+
+    // Create embeddings
+    let embeddings = EmbeddingsBuilder::new(model.clone())
+        .simple_document("doc1", "Rig is a Rust library for building LLM applications.")
+        .simple_document("doc2", "Rig supports various LLM providers and vector stores.")
+        .build()
+        .await?;
+
+    // Create table with embeddings
+    let record_batch = rig_lancedb::as_record_batch(embeddings, model.ndims());
+    let table = db
+        .create_table(
+            "rig_docs",
+            RecordBatchIterator::new(vec![record_batch], Arc::new(rig_lancedb::schema(model.ndims()))),
+        )
+        .execute()
+        .await?;
+
+    // Create vector store
+    let search_params = SearchParams::default();
+    let vector_store = LanceDbVectorStore::new(table, model, "id", search_params).await?;
+
+    // Query the index
+    let results = vector_store
+        .top_n::<VectorSearchResult>("What is Rig?", 1)
+        .await?;
+
+    for (score, id, result) in results {
+        println!("Score: {}, ID: {}, Content: {}", score, id, result.content);
+    }
+
+    Ok(())
+}
+```
+
+## Key Features of Rig
+
+1. **Multiple LLM Providers**: Rig supports various LLM providers, including OpenAI, Anthropic (Claude), Cohere, and Perplexity AI.
+
+2. **Flexible Agent System**: Easy creation of AI agents with customizable preambles, tools, and dynamic context.
+
+3. **Vector Stores**: Support for different vector stores, including in-memory and LanceDB, for efficient similarity search.
+
+4. **Embeddings**: Built-in support for generating and managing embeddings from various models.
+
+5. **Tools and Function Calling**: Ability to define custom tools and use function calling with LLMs.
+
+6. **RAG (Retrieval-Augmented Generation)**: Easy implementation of RAG systems with dynamic context and tools.
+
+7. **Extractors**: Simplifies the process of extracting structured data from text using LLMs.
+
+8. **Multi-Agent Systems**: Facilitates the creation of systems with multiple interacting AI agents.
+
+9. **Connectors**: Support for external data sources, like Cohere's web connectors.
+
+10. **CLI Chatbots**: Utility functions for creating command-line interface chatbots.
+
+11. **Async/Await**: Built with Rust's async/await paradigm for efficient concurrent operations.
+
+12. **Type Safety**: Leverages Rust's strong type system for robust and safe LLM application development.
+
+## Best Practices When Using Rig
+
+1. **Environment Variables**: Always use environment variables for API keys instead of hardcoding them.
+
+2. **Error Handling**: Make use of Rust's robust error handling with `Result` types and the `?` operator.
+
+3. **Model Selection**: Choose the appropriate model for your task. More powerful models like GPT-4 or Claude 3 Opus are better for complex reasoning, while smaller models may be sufficient for simpler tasks.
+
+4. **Prompt Engineering**: Craft clear and specific prompts. Use the `preamble` method to set the overall context and behavior of your agents.
+
+5. **Tools**: Implement tools for specific functionalities to extend the capabilities of your agents.
+
+6. **Vector Stores**: Use vector stores for efficient similarity search when working with large amounts of data.
+
+7. **Embeddings**: Generate embeddings once and store them, rather than regenerating them for each query.
+
+8. **Rate Limiting**: Be aware of rate limits for different LLM providers and implement appropriate waiting or retrying mechanisms.
+
+9. **Testing**: Write unit and integration tests for your Rig-based applications to ensure reliability.
+
+10. **Modularity**: Design your application with modularity in mind, separating concerns like model initialization, agent creation, and business logic.
+
+By following these best practices and leveraging Rig's features, you can build powerful, efficient, and maintainable LLM-powered applications in Rust.
