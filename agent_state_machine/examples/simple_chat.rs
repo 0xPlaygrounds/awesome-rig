@@ -1,4 +1,4 @@
-use agent_state_machine::ChatAgentStateMachine;
+use agent_state_machine::{ChatAgentStateMachine, AgentState}; // Added AgentState import
 use rig::providers::openai::{self, GPT_4};
 use std::time::Duration;
 
@@ -21,6 +21,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create state machine
     let mut state_machine = ChatAgentStateMachine::new(agent);
 
+    // Set up a response callback to handle outputs
+    state_machine.set_response_callback(|response| {
+        println!("🤖 Assistant: {}", response);
+    });
+
     // Subscribe to state changes
     let mut state_rx = state_machine.subscribe_to_state_changes();
 
@@ -35,23 +40,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let messages = vec![
         "Hello! How are you?",
         "What's your favorite color?",
-        "what is the meaning of life?",
-        "what is the airspeed velocity of an unladen swallow?",
-        "what is the capital of Assyria?",
-        "what is the airspeed velocity of a coconut-laden swallow?",
+        "What is the meaning of life?",
+        "What is the airspeed velocity of an unladen swallow?",
+        "What is the capital of Assyria?",
+        "What is the airspeed velocity of a coconut-laden swallow?",
     ];
 
+    // Enqueue all messages into the state machine
     for message in messages {
         println!("\n👤 User: {}", message);
         
-        match state_machine.process_message(message).await {
-            Ok(response) => {
-                println!("🤖 Assistant: {}", response);
-                // Small delay to make the conversation feel more natural
-                tokio::time::sleep(Duration::from_millis(500)).await;
-            }
-            Err(e) => eprintln!("❌ Error: {}", e),
-        }
+        // Enqueue the message
+        state_machine.process_message(message).await?;
+    }
+
+    // Wait until all messages have been processed
+    while state_machine.current_state() != &AgentState::Ready {
+        tokio::time::sleep(Duration::from_millis(100)).await;
     }
 
     println!("\n=== Demo Complete ===");
