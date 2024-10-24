@@ -1,3 +1,5 @@
+// src/state.rs
+
 use std::fmt;
 
 /// Represents the possible states of a chat agent
@@ -11,6 +13,8 @@ pub enum AgentState {
     ProcessingQueue,
     /// Error state when something goes wrong
     Error(String),
+    /// Custom state for specific agent actions
+    Custom(String),
 }
 
 impl fmt::Display for AgentState {
@@ -20,9 +24,11 @@ impl fmt::Display for AgentState {
             AgentState::Processing => write!(f, "Processing"),
             AgentState::ProcessingQueue => write!(f, "Processing Queue"),
             AgentState::Error(msg) => write!(f, "Error: {}", msg),
+            AgentState::Custom(state) => write!(f, "{}", state),
         }
     }
 }
+
 
 
 #[cfg(test)]

@@ -153,7 +153,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     });
 
     // Get search results directly
-    let query = "quantum computing";
+    let query = "llm transformer";
     println!("🔍 Searching arXiv for '{}'", query);
     let results = arxiv_search_tool.search(query).await?;
 

@@ -89,7 +89,7 @@ impl<A: Chat> ChatAgentStateMachine<A> {
     }
 
     /// Process a single message
-    async fn process_single_message(&mut self, message: &str) -> Result<String, PromptError> {
+    pub async fn process_single_message(&mut self, message: &str) -> Result<String, PromptError> {
         debug!("Processing message: {}", message);
 
         self.history.push(Message {
@@ -133,7 +133,7 @@ impl<A: Chat> ChatAgentStateMachine<A> {
         self.history.clear();
     }
 
-    fn transition_to(&mut self, new_state: AgentState) {
+    pub fn transition_to(&mut self, new_state: AgentState) {
         debug!("State transition: {} -> {}", self.current_state, new_state);
         self.current_state = new_state.clone();
         let _ = self.state_tx.send(new_state);
