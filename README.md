@@ -14,7 +14,6 @@ applications.
 - [Libraries and Frameworks](#libraries-and-frameworks)
 - [Applications](#applications)
 - [Production Users](#production-users)
-- [Examples in This Repository](#examples-in-this-repository)
 - [Articles and Talks](#articles-and-talks)
 - [Contributing](#contributing)
 
@@ -119,25 +118,6 @@ These companies and teams publicly mention Rig usage in the upstream README or e
 - [Syncable](https://syncable.dev/) - Uses Rig in its CLI.
 - [Refresh Agent](https://refreshagent.com/) - Uses Rig for SEO and marketing-analysis agents.
 - [nitpik](https://nitpik.dev/) - Uses Rig under the hood for AI code reviews.
-
-## Examples in This Repository
-
-This repository also contains small examples and experiments built with Rig:
-
-- [Simple agent](basics/simple_agent/) - Minimal agent setup.
-- [RAG system](rag_system/) - Retrieval-augmented generation example.
-- [Discord Rig bot](discord_rig_bot/) - Discord bot powered by Rig agents.
-- [Flight search assistant](flight_search_assistant/) - Tool-using travel assistant.
-- [RSS summarizer](rss_summarizer/) - Feed summarization workflow.
-- [Entity extraction](entity_extraction_example/) - Structured extraction example.
-- [Text classification](text_classification_example/) - Classification workflow.
-- [Synthetic data generation](synthetic_data_example/) - Generate structured synthetic data.
-- [Agent state machine](agent_state_machine/) - State-machine patterns for multi-agent workflows.
-- [Concurrent demo](rig_concurrent_demo/) - Concurrent Rig processing example.
-- [PID controller tuner](pid_controller_tuner_example/) - AI-assisted controller tuning.
-- [Advanced PID controller tuner](advanced_pid_controller_tuner_example/) - Iterative controller tuning with generated responses.
-- [Tic-tac-toe example](tic-tac-toe_example/) - Small game-oriented agent example.
-- [RustBuddy](rustbuddy/) - Rust assistant experiment.
 
 ## Articles and Talks
 

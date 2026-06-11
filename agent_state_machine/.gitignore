@@ -1,8 +1,0 @@
-/target
-**/*.rs.bk
-Cargo.lock
-.env
-.idea/
-.vscode/
-*.swp
-*.swo
