@@ -16,6 +16,7 @@ applications.
 - [Production Users](#production-users)
 - [Articles and Talks](#articles-and-talks)
 - [Contributing](#contributing)
+- [License](#license)
 
 ## Official Resources
 
@@ -144,3 +145,7 @@ Contributions are welcome. Good entries should be:
 
 Please keep categories alphabetized where practical and avoid adding abandoned forks,
 empty demos, or projects with no clear Rig usage.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
