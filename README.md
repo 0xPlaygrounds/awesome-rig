@@ -40,11 +40,14 @@ These sources are useful for finding additional projects that depend on Rig:
 
 ## Libraries and Frameworks
 
+- [Agent Governance Toolkit](https://github.com/microsoft/agent-governance-toolkit) - Microsoft's policy enforcement and governance toolkit for agents, with a dedicated Rust Rig integration for guarded Rig tools.
 - [graph-flow](https://github.com/a-agmon/rs-graph-llm) - Type-safe graph execution framework for multi-agent workflows, similar in spirit to LangGraph.
 - [coral-rs](https://github.com/Coral-Protocol/coral-rs) - Rig and RMCP helper library for building Rust-powered Coral agents.
 - [rig-openapi-tools](https://github.com/skharchikov/rig-openapi-tools) - Generate Rig-callable tools from OpenAPI specifications.
+- [llm-coding-tools](https://github.com/Sewer56/llm-coding-tools) - Lightweight Rig tool implementations for coding agents and developer workflows.
 - [yart](https://github.com/pupplecat/yart) - Proc-macro utilities, including a `#[rig_tool]` macro for Rig tools.
 - [riglr](https://github.com/riglr/riglr) - Rig-compatible tools for Solana, web search, DexScreener, Twitter, and related agent workflows.
+- [rig-llama-cpp](https://github.com/camperking/rig-llama-cpp) - Rig completion provider for local GGUF models through llama.cpp, including streaming, tool calling, reasoning, and multimodal support.
 - [rig-memvid](https://github.com/ForeverAngry/rig-memvid) - Memvid-backed persistent memory and lexical store for Rig agents.
 - [rig-tap](https://github.com/ForeverAngry/rig-tap) - Backend-agnostic observability events and lifecycle taps for Rig agents.
 - [rig-retrieval-evals](https://github.com/ForeverAngry/rig-retrieval-evals) - Evaluation harness for Rig retrieval and knowledge-base workflows.
@@ -53,9 +56,11 @@ These sources are useful for finding additional projects that depend on Rig:
 - [metalcraft](https://github.com/rust4ai/metalcraft) - LangGraph-style stateful graph orchestrator for AI agents in Rust.
 - [reasonkit-core](https://github.com/reasonkit/reasonkit-core) - Rust-native reasoning engine for auditable production AI systems.
 - [solagent](https://github.com/zTgx/solagent.rs) - Framework for connecting AI agents to Solana protocols in Rust.
+- [skill](https://github.com/kubiyabot/skill) - Runtime, CLI, and MCP server for AI agent skills, with Rig-powered execution components.
 - [unifai-sdk-rs](https://github.com/unifai-network/unifai-sdk-rs) - Rust SDK for dynamic tools and agent-to-agent communication on Unifai.
 - [awpak-ai](https://github.com/afuentesan/awpak-tui/tree/main/awpak-ai) - Agent, command, and URL orchestration library using execution graphs.
 - [nika](https://github.com/supernovae-st/nika) - Semantic YAML workflow engine for AI tasks with DAG execution, MCP, and multi-provider LLM support.
+- [flow-like](https://github.com/Rheosoph/flow-like) - SDK for building Flow-Like WASM nodes and AI workflow components.
 - [weavegraph](https://github.com/Idleness76/weavegraph) - Graph-driven concurrent agent workflow framework with versioned state and deterministic merges.
 - [rig-dyn](https://github.com/GustavoWidman/rig-dyn) - Dynamic client-provider abstraction layer on top of `rig-core`.
 - [rig-extra](https://github.com/launcher-rs/rig-extra-project) - Lightweight extensions built on top of `rig-core`.
