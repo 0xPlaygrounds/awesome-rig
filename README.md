@@ -65,6 +65,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [weavegraph](https://github.com/Idleness76/weavegraph) - Graph-driven concurrent agent workflow framework with versioned state and deterministic merges.
 - [rig-dyn](https://github.com/GustavoWidman/rig-dyn) - Dynamic client-provider abstraction layer on top of `rig-core`.
 - [rig-extra](https://github.com/launcher-rs/rig-extra-project) - Lightweight extensions built on top of `rig-core`.
+- [rig-redis-vectorstore](https://github.com/daric93/rig-redis-vectorstore) - Redis (RediSearch) vector store integration for Rig with KNN similarity search, metadata filtering, and configurable distance metrics ([crates.io](https://crates.io/crates/rig-redis-vectorstore)).
 
 ## Applications
 
