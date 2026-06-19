@@ -125,6 +125,7 @@ These companies and teams publicly mention Rig usage in the upstream README or e
 - [Syncable](https://syncable.dev/) - Uses Rig in its CLI.
 - [Refresh Agent](https://refreshagent.com/) - Uses Rig for SEO and marketing-analysis agents.
 - [nitpik](https://nitpik.dev/) - Uses Rig under the hood for AI code reviews.
+- [Archestra](https://github.com/archestra-ai/archestra) - MCP-native secure AI platform. Uses Rig in its agentic benchmark.
 
 ## Articles and Talks
 
