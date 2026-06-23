@@ -97,6 +97,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [Amico](https://github.com/AIMOverse/amico) - AI agent framework with SDK and plugins.
 - [termai](https://github.com/JazzyMcJazz/termai) - AI assistant for the terminal.
 - [squid](https://github.com/DenysVuika/squid) - AI-powered command-line code review and suggestion tool.
+- [taquba-research](https://github.com/micllam/taquba-research) - Reference implementation of a durable Rig agent: a research CLI that plans, searches the web, reads pages, and synthesizes cited reports, with multi-step runs persisted to object storage so they resume after a crash.
 
 ### Domain-Specific Projects
 
