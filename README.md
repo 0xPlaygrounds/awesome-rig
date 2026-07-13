@@ -110,6 +110,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [kumo](https://github.com/wihlarkop/kumo) - Async web crawling framework for Rust.
 - [markitdown-rs](https://github.com/uhobnil/markitdown-rs) - Rust library for converting document formats into Markdown text.
 - [noctisroll](https://github.com/noctisynth/noctisroll) - Modular TRPG dice rolling system.
+- [repo-tagger](https://git.milliways.info/milliways-infosec-tools/repo-tagger) - Milliways uses an agent based on rig to automatically assign topics/tags to security related git repositories, such as the corresponding CVE ids, network protocols, operating systems and similar information.
 
 ## Production Users
 
