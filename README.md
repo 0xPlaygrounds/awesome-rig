@@ -51,6 +51,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [rig-llama-cpp](https://github.com/camperking/rig-llama-cpp) - Rig completion provider for local GGUF models through llama.cpp, including streaming, tool calling, reasoning, and multimodal support.
 - [rig-memvid](https://github.com/ForeverAngry/rig-memvid) - Memvid-backed persistent memory and lexical store for Rig agents.
 - [rig-tap](https://github.com/ForeverAngry/rig-tap) - Backend-agnostic observability events and lifecycle taps for Rig agents.
+- [rig-taskmarket](https://github.com/lass274/rig-taskmarket) - Read-only TaskMarket tools for Rig agents to browse, screen, inspect, and track public work without signing or spending.
 - [rig-retrieval-evals](https://github.com/ForeverAngry/rig-retrieval-evals) - Evaluation harness for Rig retrieval and knowledge-base workflows.
 - [dspy-rs](https://github.com/krypticmouse/DSRs) - Rust rewrite of DSPy that uses Rig in its LLM plumbing.
 - [rigs](https://github.com/M4n5ter/rigs) - Orchestration framework built around Rig.
