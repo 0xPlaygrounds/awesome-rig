@@ -90,6 +90,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [ChatShell](https://github.com/chatshellapp/chatshell-desktop) - Open-source agentic desktop AI client built on `rig-core` and Tauri.
 - [Con](https://github.com/nowledge-co/con-terminal) - GPU-accelerated terminal emulator with an integrated AI agent harness.
 - [Ironclaw](https://github.com/nearai/ironclaw) - Secure personal AI assistant.
+- [REL](https://rel.me/) - Native macOS browser for isolated, scriptable, and persistent Chromium sessions, using Rig for its AI agent harness.
 - [clipbud](https://github.com/evilsocket/clipbud) - Cross-platform AI clipboard assistant.
 - [deepwiki-rs](https://github.com/sopaco/deepwiki-rs) - AI documentation engine that generates technical documentation from codebases.
 - [Cortex Memory](https://github.com/sopaco/cortex-mem) - Memory system for intelligent agents, including extraction, vector search, optimization, MCP, REST, CLI, and dashboards.
