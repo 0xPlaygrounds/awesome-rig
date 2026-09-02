@@ -85,6 +85,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [gitbuddy](https://github.com/1mw1zard/gitbuddy) - AI tool for simplifying Git commit workflows.
 - [bgit](https://github.com/rootCircle/bgit) - Beginner-friendly Git wrapper with safeguards for common mistakes.
 - [rho](https://github.com/casonadams/rho) — A minimalist agentic coding CLI, featuring drop-in plugin hooks (via cargo), MCP gateway discovery, and zero-overhead startup.
+- [aries](https://github.com/ltoddy/aries) - A self-developed general-purpose AI agent for assisting with daily development work.
 
 ### Agents, Assistants, and RAG
 
