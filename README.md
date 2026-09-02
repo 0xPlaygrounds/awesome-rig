@@ -84,6 +84,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [gmsg](https://github.com/olorikendrick/gmsg) - AI-powered commit message generator with a TUI editor.
 - [gitbuddy](https://github.com/1mw1zard/gitbuddy) - AI tool for simplifying Git commit workflows.
 - [bgit](https://github.com/rootCircle/bgit) - Beginner-friendly Git wrapper with safeguards for common mistakes.
+- [rho](https://github.com/casonadams/rho) — A minimalist agentic coding CLI, featuring drop-in plugin hooks (via cargo), MCP gateway discovery, and zero-overhead startup.
 
 ### Agents, Assistants, and RAG
 
