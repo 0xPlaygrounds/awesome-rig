@@ -102,7 +102,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [termai](https://github.com/JazzyMcJazz/termai) - AI assistant for the terminal.
 - [squid](https://github.com/DenysVuika/squid) - AI-powered command-line code review and suggestion tool.
 - [taquba-research](https://github.com/micllam/taquba-research) - Reference implementation of a durable Rig agent: a research CLI that plans, searches the web, reads pages, and synthesizes cited reports, with multi-step runs persisted to object storage so they resume after a crash.
-- [tenuo-rig-demo](https://github.com/tenuo-ai/tenuo-rig-demo) - On-call Rig agents with per-call warrants. An orchestrator delegates to workers and an MCP server; authority only shrinks, and the server verifies each `tools/call`.
+- [tenuo-rig-demo](https://github.com/tenuo-ai/tenuo-rig-demo) - On-call Rig agents with per-call authorization. An orchestrator delegates to workers and an MCP server; authority is traced across the chain, and the server verifies each `tools/call`.
 
 ### Domain-Specific Projects
 
