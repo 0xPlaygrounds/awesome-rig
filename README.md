@@ -48,6 +48,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [llm-coding-tools](https://github.com/Sewer56/llm-coding-tools) - Lightweight Rig tool implementations for coding agents and developer workflows.
 - [yart](https://github.com/pupplecat/yart) - Proc-macro utilities, including a `#[rig_tool]` macro for Rig tools.
 - [riglr](https://github.com/riglr/riglr) - Rig-compatible tools for Solana, web search, DexScreener, Twitter, and related agent workflows.
+- [rig-agentguild](https://github.com/AgentTanuki/rig-agentguild) - Native Rig MCP tools with per-call Agent Guild endpoint preflight, explicit probing consent, and an offline example.
 - [rig-llama-cpp](https://github.com/camperking/rig-llama-cpp) - Rig completion provider for local GGUF models through llama.cpp, including streaming, tool calling, reasoning, and multimodal support.
 - [rig-memvid](https://github.com/ForeverAngry/rig-memvid) - Memvid-backed persistent memory and lexical store for Rig agents.
 - [rig-tap](https://github.com/ForeverAngry/rig-tap) - Backend-agnostic observability events and lifecycle taps for Rig agents.
