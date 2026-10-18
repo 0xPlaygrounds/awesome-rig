@@ -68,6 +68,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [rig-dyn](https://github.com/GustavoWidman/rig-dyn) - Dynamic client-provider abstraction layer on top of `rig-core`.
 - [rig-extra](https://github.com/launcher-rs/rig-extra-project) - Lightweight extensions built on top of `rig-core`.
 - [rig-redis-vectorstore](https://github.com/daric93/rig-redis-vectorstore) - Redis (RediSearch) vector store integration for Rig with KNN similarity search, metadata filtering, and configurable distance metrics ([crates.io](https://crates.io/crates/rig-redis-vectorstore)).
+- [tokio-prompt-orchestrator](https://github.com/Mattbusel/tokio-prompt-orchestrator) - LLM request pipeline with deduplication, circuit breaker, retries and a dead-letter queue; its `rig` feature runs any Rig completion model as a worker ([crates.io](https://crates.io/crates/tokio-prompt-orchestrator)).
 
 ## Applications
 
