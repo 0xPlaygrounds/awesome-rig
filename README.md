@@ -89,6 +89,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [rho](https://github.com/casonadams/rho) — A minimalist agentic coding CLI, featuring drop-in plugin hooks (via cargo), MCP gateway discovery, and zero-overhead startup.
 - [aries](https://github.com/ltoddy/aries) - A self-developed general-purpose AI agent for assisting with daily development work.
 - [voff](https://github.com/orhun/voff) - Workflow builder that plans a task, assigns it to a team of coding agents working in parallel, and shows the workflow live in a TUI; its model providers are built on `rig-core`.
+- [dtshim](https://github.com/korableg/dtshim) - A shim for executing commands on the host from inside a container.
 
 ### Agents, Assistants, and RAG
 
