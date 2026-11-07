@@ -69,6 +69,7 @@ These sources are useful for finding additional projects that depend on Rig:
 - [rig-extra](https://github.com/launcher-rs/rig-extra-project) - Lightweight extensions built on top of `rig-core`.
 - [rig-redis-vectorstore](https://github.com/daric93/rig-redis-vectorstore) - Redis (RediSearch) vector store integration for Rig with KNN similarity search, metadata filtering, and configurable distance metrics ([crates.io](https://crates.io/crates/rig-redis-vectorstore)).
 - [tokio-prompt-orchestrator](https://github.com/Mattbusel/tokio-prompt-orchestrator) - LLM request pipeline with deduplication, circuit breaker, retries and a dead-letter queue; its `rig` feature runs any Rig completion model as a worker ([crates.io](https://crates.io/crates/tokio-prompt-orchestrator)).
+- [Infinity](https://github.com/hydro-project/infinity) - Rust runtime for massively concurrent agent systems; its optional `infinity-provider-rig` crate serves any Rig completion model as an Infinity model provider ([website](https://infinity.hydro.run/), [crates.io](https://crates.io/crates/infinity-provider-rig)).
 
 ## Applications
 
