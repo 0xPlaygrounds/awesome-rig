@@ -148,6 +148,7 @@ These companies and teams publicly mention Rig usage in the upstream README or e
 - [Building AI Agents in Rust](https://refreshagent.com/engineering/building-ai-agents-in-rust) - Refresh Agent engineering article.
 - [Rig guides](https://docs.rig.rs/guides) - Official Rig guides and blog-style walkthroughs.
 
+- [guarddog-rs](https://github.com/guarddog-top/guarddog-rs) - Token safety check for Rust agents: PASS/WARN/BITE verdicts in 23ms (honeypot detection, ETH/BSC/Base/Solana)
 ## Contributing
 
 Contributions are welcome. Good entries should be:
